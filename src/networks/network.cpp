@@ -80,6 +80,8 @@ Network::~Network( )
 Network * Network::New(const Configuration & config, const string & name)
 {
   const string topo = config.GetStr( "topology" );
+  cout<<"asfsafascjbsajbfhjasbfjksaf"<<endl;
+  cout<<topo<<endl;
   Network * n = NULL;
   if ( topo == "torus" ) {
     KNCube::RegisterRoutingFunctions() ;

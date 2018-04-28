@@ -140,7 +140,7 @@ protected:
   double outputArea;
   double maxInputPort;
   double maxOutputPort;
-
+double pePower;
 
   ////////////////////////
 
@@ -154,6 +154,7 @@ protected:
   
   //memory
   void calcBuffer(const BufferMonitor *bm);
+  void powerPE();
   double powerWordLine(double memoryWidth, double memoryDepth);
   double powerMemoryBitRead(double memoryDepth);
   double powerMemoryBitWrite(double memoryDepth);

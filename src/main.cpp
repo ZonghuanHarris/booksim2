@@ -155,22 +155,25 @@ int main( int argc, char **argv )
 {
 
   BookSimConfig config;
-
-
+  
+  cout<<"1111111111"<<config.GetInt("k")<<endl;
+cout<<argc<<endl;
+cout<<argv<<endl;
   if ( !ParseArgs( &config, argc, argv ) ) {
     cerr << "Usage: " << argv[0] << " configfile... [param=value...]" << endl;
     return 0;
  } 
 
-  
+  cout<<"222222222"<<config.GetInt("k")<<endl;
   /*initialize routing, traffic, injection functions
    */
   InitializeRoutingMap( config );
-
+cout<<"333333333"<<config.GetInt("k")<<endl;
   gPrintActivity = (config.GetInt("print_activity") > 0);
   gTrace = (config.GetInt("viewer_trace") > 0);
   
   string watch_out_file = config.GetStr( "watch_out" );
+  cout<<"filefilefile"<<watch_out_file<<endl;
   if(watch_out_file == "") {
     gWatchOut = NULL;
   } else if(watch_out_file == "-") {
@@ -179,9 +182,10 @@ int main( int argc, char **argv )
     gWatchOut = new ofstream(watch_out_file.c_str());
   }
   
-
   /*configure and run the simulator
    */
+    //cout<<config.GetInt("k")<<endl;
+
   bool result = Simulate( config );
   return result ? -1 : 0;
 }

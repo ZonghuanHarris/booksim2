@@ -232,10 +232,15 @@ bool ParseArgs(Configuration * cf, int argc, char * * argv)
   for(int i = 1; i < argc; ++i) {
     string arg(argv[i]);
     size_t pos = arg.find('=');
+    cout << "ssssssssssss"<< endl;
+    cout<<pos<<endl;
     bool dash = (argv[i][0] =='-');
+    cout<<argv[i]<<endl;
     if(pos == string::npos && !dash) {
+      
       // parse config file
       cf->ParseFile( argv[i] );
+
       ifstream in(argv[i]);
       cout << "BEGIN Configuration File: " << argv[i] << endl;
       while (!in.eof()) {

@@ -30,11 +30,10 @@
 #include "buffer_monitor.hpp"
 #include "switch_monitor.hpp"
 #include "iq_router.hpp"
-
+  double peComputeAmount[16]={100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100};;
+  double peWeight[16]={1,1,1,1,0.7,1,1,1,0.5,1,0.5,1,1,1,1,1};
 Power_Module::Power_Module(Network * n , const Configuration &config)
   : Module( 0, "power_module" ){
-
-  
   string pfile = config.GetStr("tech_file");
   PowerConfig pconfig;
   pconfig.ParseFile(pfile);
@@ -216,7 +215,13 @@ double Power_Module::powerWireDFF(double M, double W, double alpha){
   
   return Cint * M * W * (Vdd*Vdd) * fCLK ;
 }
-
+void Power_Module::powerPE(){
+  double result=0;
+  for(int i=0;i<16;i++){
+result+=peComputeAmount[i]*peWeight[i];
+  }
+  pePower = result;
+}
 
 ///////////////////////////////////////////////////////////////
 //Memory
@@ -466,7 +471,7 @@ void Power_Module::run(){
   outputArea=0;
   maxInputPort = 0;
   maxOutputPort = 0;
-
+  pePower=0;
   vector<FlitChannel *> inject = net->GetInject();
   vector<FlitChannel *> eject = net->GetEject();
   vector<FlitChannel *> chan = net->GetChannels();
@@ -491,9 +496,11 @@ void Power_Module::run(){
     const SwitchMonitor * sm = temp->GetSwitchMonitor();
     calcSwitch(sm);
   }
-  
-  double totalpower =  channelWirePower+channelClkPower+channelDFFPower+channelLeakPower+ inputReadPower+inputWritePower+inputLeakagePower+ switchPower+switchPowerCtrl+switchPowerLeak+outputPower+outputPowerClk+outputCtrlPower;
+  powerPE();
+  double totalpower =  pePower+channelWirePower+channelClkPower+channelDFFPower+channelLeakPower+ inputReadPower+inputWritePower+inputLeakagePower+ switchPower+switchPowerCtrl+switchPowerLeak+outputPower+outputPowerClk+outputCtrlPower;
   double totalarea =  channelArea+switchArea+inputArea+outputArea;
+  cout<<routers.size()<<endl;
+  cout<<net->NumNodes()<<endl;
   cout<< "-----------------------------------------\n" ;
   cout<< "- OCN Power Summary\n" ;
   cout<< "- Completion Time:         "<<totalTime <<"\n" ;

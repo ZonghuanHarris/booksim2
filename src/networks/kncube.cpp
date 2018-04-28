@@ -55,6 +55,8 @@ Network( config, name )
 void KNCube::_ComputeSize( const Configuration &config )
 {
   _k = config.GetInt( "k" );
+  cout<<"bulidafnaskjfnajkgnaskjgna"<<endl;
+  cout<<_k<<endl;
   _n = config.GetInt( "n" );
 
   gK = _k; gN = _n;

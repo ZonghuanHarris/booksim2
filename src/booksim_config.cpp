@@ -306,9 +306,9 @@ BookSimConfig::BookSimConfig( )
   AddStrField("sent_packets_out", "");
   
   //==================Power model params=====================
-  _int_map["sim_power"] = 0;
+  _int_map["sim_power"] = 1;
   AddStrField("power_output_file","pwr_tmp");
-  AddStrField("tech_file", "");
+  AddStrField("tech_file", "/Users/zonghuan/Documents/booksim2/src/power/techfile.txt");
   _int_map["channel_width"] = 128;
   _int_map["channel_sweep"] = 0;
 
